@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helm zuordnen – Feuerwehr Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body data-correct-epoch="1940"
+      data-fact="Dieser Helm wurde um 1940 von Feuerwehrmännern getragen und schützte sie bei Bränden vor Verletzungen am Kopf."
+      data-name="Feuerwehrhelm"
+      data-icon="⛑"
+      data-glb="models/helm.glb">
+    <div class="phone">
+        <div class="container">
+            <h1 class="page-title">Zuordnen</h1>
+            <p class="page-sub">Ziehe das Objekt zur richtigen Person</p>
+
+            <div class="object-badge">
+                <model-viewer
+                    src="models/helm.glb"
+                    alt=""
+                    camera-controls
+                    auto-rotate
+                    rotation-per-second="40deg"
+                    interaction-prompt="none"
+                    disable-zoom>
+                </model-viewer>
+                Feuerwehrhelm
+            </div>
+
+            <div class="detail-card">
+                <h2>AR-Helm</h2>
+
+                <div class="viewer-wrap">
+                    <model-viewer
+                        src="models/helm.glb"
+                        alt="3D-Modell des Helms"
+                        ar
+                        ar-modes="scene-viewer webxr"
+                        ar-scale="auto"
+                        camera-controls
+                        auto-rotate
+                        shadow-intensity="1">
+                        <button slot="ar-button" class="btn-ar">
+                            📱 In AR ansehen
+                        </button>
+                    </model-viewer>
+                </div>
+
+                <p class="detail-instruction">
+                    Wähle den Feuerwehrmann aus der Zeit, in der du denkst,<br>
+                    dass der Helm benutzt wurde.
+                </p>
+
+                <div class="epochs">
+                    <button class="epoch-btn" data-epoch="1940">
+                        <span class="epoch-icon">👨‍🚒</span>
+                        <span class="epoch-year">1940</span>
+                    </button>
+                    <button class="epoch-btn" data-epoch="1980">
+                        <span class="epoch-icon">👨‍🚒</span>
+                        <span class="epoch-year">1980</span>
+                    </button>
+                    <button class="epoch-btn" data-epoch="2020">
+                        <span class="epoch-icon">👨‍🚒</span>
+                        <span class="epoch-year">2020</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <a href="objekte.html" class="fab-back" aria-label="Zurück">←</a>
+        <a href="index.html" class="fab-home" aria-label="Home">⌂</a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

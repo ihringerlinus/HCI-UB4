@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kategorie auswählen – Feuerwehr Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+</head>
+<body>
+    <div class="phone">
+        <div class="container">
+            <h1 class="page-title">Kategorie auswählen</h1>
+            <p class="page-sub">Welches Objekt möchtest du zuordnen?</p>
+
+            <div class="task-card">
+                <h2 class="task-title">Aufgabe:</h2>
+                <p>Wähle ein Objekt aus, welches dich interessiert</p>
+                <p>Du wirst ein Objekt aus dieser Kategorie dem Feuerwehrmann aus der richtigen Zeit zuordnen müssen</p>
+            </div>
+
+            <div class="object-list">
+                <a href="helm.html" class="object-pill">
+                    <model-viewer
+                        src="models/helm.glb"
+                        alt=""
+                        camera-controls
+                        auto-rotate
+                        rotation-per-second="40deg"
+                        interaction-prompt="none"
+                        disable-zoom>
+                    </model-viewer>
+                    Feuerwehrhelm
+                </a>
+
+                <a href="loescher1.html" class="object-pill">
+                    <model-viewer
+                        src="models/loescher1.glb"
+                        alt=""
+                        camera-controls
+                        auto-rotate
+                        rotation-per-second="40deg"
+                        interaction-prompt="none"
+                        disable-zoom>
+                    </model-viewer>
+                    Feuerlöscher 1
+                </a>
+
+                <a href="loescher2.html" class="object-pill">
+                    <model-viewer
+                        src="models/loescher2.glb"
+                        alt=""
+                        camera-controls
+                        auto-rotate
+                        rotation-per-second="40deg"
+                        interaction-prompt="none"
+                        disable-zoom>
+                    </model-viewer>
+                    Feuerlöscher 2
+                </a>
+            </div>
+        </div>
+
+        <a href="index.html" class="fab-home" aria-label="Home">⌂</a>
+    </div>
+</body>
+</html>
