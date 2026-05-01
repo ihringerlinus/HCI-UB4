@@ -30,24 +30,161 @@
             </div>
         </section>
 
+        <section class="name-section">
+            <div class="card-bordered">
+                <div id="name-input-wrap">
+                    <p class="name-label">Dein Name für die Rangliste:</p>
+                    <div class="name-row">
+                        <input type="text" id="name-input" class="name-input" placeholder="Name eingeben…" maxlength="20">
+                        <button class="btn-name" id="name-save-btn">OK</button>
+                    </div>
+                </div>
+                <div id="name-display-wrap" style="display:none">
+                    <div class="name-display-row">
+                        <span class="name-label">Spieler: <strong id="name-display"></strong></span>
+                        <button class="btn-name-change" id="name-change-btn">ändern</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <div class="stats-row">
             <div class="stat-card">
                 <div class="stat-icon">⭐</div>
-                <div class="stat-value">0</div>
+                <div class="stat-value" id="stat-score">0</div>
                 <div class="stat-label">Punkte</div>
             </div>
             <div class="stat-card">
                 <div class="stat-icon">🏆</div>
-                <div class="stat-value">8. Platz</div>
+                <div class="stat-value" id="stat-rank">—</div>
                 <div class="stat-label">Rangliste</div>
             </div>
         </div>
 
+        <section class="lb-section">
+            <div class="card-bordered">
+                <h2 class="tutorial-title">RANGLISTE</h2>
+                <div class="lb-list" id="lb-list">
+                    <p class="lb-empty">Noch keine Einträge. Spiel jetzt!</p>
+                </div>
+            </div>
+        </section>
+
         <div class="cta-wrap">
-            <a href="objekte.html" class="btn-cta">Spiel Starten</a>
+            <a href="objekte.html" class="btn-cta" id="start-btn">Spiel Starten</a>
         </div>
 
         <div class="footer">Gruppe 1 · HCI FS2026 · Übungsblatt 4</div>
     </div>
+
+    <script>
+    (function () {
+        function getLeaderboard() {
+            return JSON.parse(localStorage.getItem('fwLeaderboard') || '{}');
+        }
+        function saveLeaderboard(lb) {
+            localStorage.setItem('fwLeaderboard', JSON.stringify(lb));
+        }
+        function getCurrentUser() {
+            return localStorage.getItem('fwCurrentUser') || null;
+        }
+        function setCurrentUser(name) {
+            localStorage.setItem('fwCurrentUser', name);
+        }
+
+        const nameInput       = document.getElementById('name-input');
+        const nameSaveBtn     = document.getElementById('name-save-btn');
+        const nameInputWrap   = document.getElementById('name-input-wrap');
+        const nameDisplayWrap = document.getElementById('name-display-wrap');
+        const nameDisplay     = document.getElementById('name-display');
+        const nameChangeBtn   = document.getElementById('name-change-btn');
+        const statScore       = document.getElementById('stat-score');
+        const statRank        = document.getElementById('stat-rank');
+        const lbList          = document.getElementById('lb-list');
+
+        function updateStats() {
+            const user = getCurrentUser();
+            const lb   = getLeaderboard();
+
+            if (!user) {
+                statScore.textContent = '0';
+                statRank.textContent  = '—';
+                return;
+            }
+
+            const myData = lb[user] || { score: 0 };
+            statScore.textContent = myData.score;
+
+            const sorted = Object.entries(lb).sort((a, b) => b[1].score - a[1].score);
+            const rank = sorted.findIndex(([n]) => n === user) + 1;
+            statRank.textContent = rank > 0 ? rank + '. Platz' : '—';
+        }
+
+        function renderLeaderboard() {
+            const lb   = getLeaderboard();
+            const user = getCurrentUser();
+            const sorted = Object.entries(lb).sort((a, b) => b[1].score - a[1].score);
+
+            if (sorted.length === 0) {
+                lbList.innerHTML = '<p class="lb-empty">Noch keine Einträge. Spiel jetzt!</p>';
+                return;
+            }
+
+            const medals = ['🥇', '🥈', '🥉'];
+            lbList.innerHTML = sorted.map(([n, data], i) => {
+                const isCurrent = n === user;
+                const rank = medals[i] || (i + 1) + '.';
+                const completed = (data.completed || []).length;
+                return `
+                    <div class="lb-row ${isCurrent ? 'lb-current' : ''}">
+                        <span class="lb-rank">${rank}</span>
+                        <span class="lb-name">${n}</span>
+                        <span class="lb-meta">${completed}/3</span>
+                        <span class="lb-score">${data.score} Pts</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showNameDisplay(name) {
+            nameInputWrap.style.display   = 'none';
+            nameDisplayWrap.style.display = 'block';
+            nameDisplay.textContent       = name;
+        }
+
+        function showNameInput() {
+            nameInputWrap.style.display   = 'block';
+            nameDisplayWrap.style.display = 'none';
+        }
+
+        function saveName() {
+            const val = nameInput.value.trim();
+            if (!val) { nameInput.focus(); return; }
+            const lb = getLeaderboard();
+            if (!lb[val]) lb[val] = { score: 0, completed: [] };
+            saveLeaderboard(lb);
+            setCurrentUser(val);
+            showNameDisplay(val);
+            updateStats();
+            renderLeaderboard();
+        }
+
+        nameSaveBtn.addEventListener('click', saveName);
+        nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') saveName(); });
+        nameChangeBtn.addEventListener('click', () => {
+            nameInput.value = getCurrentUser() || '';
+            showNameInput();
+            nameInput.focus();
+        });
+
+        // Init
+        const existing = getCurrentUser();
+        if (existing) {
+            showNameDisplay(existing);
+        }
+        updateStats();
+        renderLeaderboard();
+    })();
+    </script>
 </body>
 </html>
