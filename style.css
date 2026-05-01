@@ -56,22 +56,22 @@ p { margin: 0 0 1em; }
 /* ====== Home: Orange Hero Block ====== */
 .hero-block {
     background: var(--color-orange);
-    padding: 32px 24px 36px;
+    padding: 18px 24px 22px;
     border-radius: 0 0 var(--radius-lg) var(--radius-lg);
     text-align: center;
     color: #fff;
 }
 
 .hero-emoji {
-    font-size: 2.4rem;
-    margin-bottom: 10px;
+    font-size: 1.6rem;
+    margin-bottom: 6px;
     line-height: 1;
 }
 
 .hero-title {
     font-family: var(--font-mono);
     font-weight: 900;
-    font-size: 2.1rem;
+    font-size: 1.4rem;
     letter-spacing: 0.04em;
     margin: 0;
     color: #fff;
@@ -79,10 +79,10 @@ p { margin: 0 0 1em; }
 
 .hero-subtitle {
     font-family: var(--font-mono);
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 400;
     letter-spacing: 0.04em;
-    margin-top: 4px;
+    margin-top: 3px;
     color: #fff;
 }
 
