@@ -503,7 +503,7 @@ p { margin: 0 0 1em; }
 
 /* ====== Username Section ====== */
 .name-section {
-    margin: 22px 22px 0;
+    margin: 26px 22px 0;
 }
 
 .name-label {
@@ -569,7 +569,7 @@ p { margin: 0 0 1em; }
 
 /* ====== Leaderboard ====== */
 .lb-section {
-    margin: 22px 22px 0;
+    margin: 26px 22px 0;
 }
 
 .lb-list {

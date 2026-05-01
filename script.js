@@ -12,10 +12,25 @@
         return localStorage.getItem('fwCurrentUser') || null;
     }
 
+    function getPending() {
+        return JSON.parse(localStorage.getItem('fwPending') || '{"score":0,"completed":[]}');
+    }
+
     // Returns true if points were newly awarded, false if already completed
     function awardPoints(objectKey) {
         const user = getCurrentUser();
-        if (!user) return false;
+
+        if (!user) {
+            const pending = getPending();
+            if (!pending.completed.includes(objectKey)) {
+                pending.score += 100;
+                pending.completed.push(objectKey);
+                localStorage.setItem('fwPending', JSON.stringify(pending));
+                return true;
+            }
+            return false;
+        }
+
         const lb = getLeaderboard();
         if (!lb[user]) lb[user] = { score: 0, completed: [] };
         if (!lb[user].completed.includes(objectKey)) {

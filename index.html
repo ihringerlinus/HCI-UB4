@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feuerwehr Quiz Challenge</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
     <div class="phone">
@@ -162,6 +162,17 @@
             if (!val) { nameInput.focus(); return; }
             const lb = getLeaderboard();
             if (!lb[val]) lb[val] = { score: 0, completed: [] };
+
+            // Transfer any points earned before a name was set
+            const pending = JSON.parse(localStorage.getItem('fwPending') || '{"score":0,"completed":[]}');
+            if (pending.score > 0) {
+                lb[val].score += pending.score;
+                pending.completed.forEach(obj => {
+                    if (!lb[val].completed.includes(obj)) lb[val].completed.push(obj);
+                });
+                localStorage.removeItem('fwPending');
+            }
+
             saveLeaderboard(lb);
             setCurrentUser(val);
             showNameDisplay(val);
